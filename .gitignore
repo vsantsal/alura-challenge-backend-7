@@ -25,3 +25,9 @@ replay_pid*
 
 # Intellij
 .idea
+
+# mvn
+.mvn
+
+# application properties
+*application.properties
