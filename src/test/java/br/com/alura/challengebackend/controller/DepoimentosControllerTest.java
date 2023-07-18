@@ -3,6 +3,7 @@ package br.com.alura.challengebackend.controller;
 import br.com.alura.challengebackend.domain.entity.Depoimento;
 import br.com.alura.challengebackend.domain.repository.DepoimentosRepository;
 import br.com.alura.challengebackend.service.DepoimentosService;
+import jakarta.persistence.EntityNotFoundException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -267,6 +268,46 @@ class DepoimentosControllerTest {
                 .andExpect(jsonPath("$",
                         Matchers.hasSize(0)))
         ;
+    }
+
+    @DisplayName("Detalhe de depoimento com id válido")
+    @Test
+    public void testCenario12() throws Exception {
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Depoimento(
+                        "meu nome",
+                        "meu depoimento",
+                        "minha foto"
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(get("/depoimentos/1"))
+            // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.depoente",
+                        Matchers.is("meu nome")))
+                .andExpect(jsonPath("$.depoimento",
+                        Matchers.is("meu depoimento")))
+                .andExpect(jsonPath("$.url_foto",
+                        Matchers.is("minha foto")))
+        ;
+    }
+
+    @DisplayName("Detalhe de depoimento com id inválido")
+    @Test
+    public void testCenario13() throws Exception {
+        //   Arrange
+        when(repository.getReferenceById(2L)).thenThrow(
+                EntityNotFoundException.class
+        );
+
+        // Act
+        this.mockMvc.perform(get("/depoimentos/2"))
+
+                // Assert
+                .andExpect(status().isNotFound());
     }
 
 }
