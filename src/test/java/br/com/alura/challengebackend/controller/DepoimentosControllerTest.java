@@ -14,9 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -53,7 +55,9 @@ class DepoimentosControllerTest {
                                         " \"url_foto\": \"https://www.minhaimagem.com\"}" )
         )
                 // Assert
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(header().string("Location", containsString("depoimentos/")));
     }
 
     @DisplayName("Não deve permitir requisição sem informar depoente")
@@ -107,7 +111,10 @@ class DepoimentosControllerTest {
                                                 "\"depoimento\": \"Meu depoimento\"}" )
                 )
                 // Assert
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(header().string("Location", containsString("depoimentos/")));
+
     }
 
 }

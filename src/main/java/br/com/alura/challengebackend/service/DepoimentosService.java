@@ -18,4 +18,9 @@ public class DepoimentosService {
         Depoimento depoimentoSalvo = repository.save(depoimentoASalvar);
         return new DepoimentoDTO(depoimentoSalvo);
     }
+
+    public DepoimentoDTO detalhar(Long id) {
+        Depoimento depoimento = repository.getReferenceById(id);
+        return new DepoimentoDTO(depoimento);
+    }
 }
