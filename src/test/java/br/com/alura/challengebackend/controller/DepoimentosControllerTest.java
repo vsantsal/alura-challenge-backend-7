@@ -122,10 +122,58 @@ class DepoimentosControllerTest {
 
     }
 
+    @DisplayName("Não deve permitir requisição com depoente vazio")
+    @Test
+    public void testCenario5() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"\"," +
+                                                "\"depoimento\": \"Meu depoimento\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("Não deve permitir requisição com depoente com mais de 120 caracteres")
+    @Test
+    public void testCenario6() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"" +"a".repeat(121) + "\"," +
+                                                "\"depoimento\": \""+ "b".repeat(500) +"\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("Não deve permitir requisição com depoimento com mais de 500 caracteres")
+    @Test
+    public void testCenario7() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"" +"a".repeat(120) + "\"," +
+                                                "\"depoimento\": \""+ "b".repeat(501) +"\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
     @Disabled("mockando ainda argumento de findall")
     @DisplayName("Listagem de depoimentos para repositório com apenas um")
     @Test
-    public void testCenario5() throws Exception {
+    public void testCenarioSem() throws Exception {
         // Arrange
         when(repository.findAll(Example.of(new Depoimento()))).thenReturn(
                 List.of(
