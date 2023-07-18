@@ -31,3 +31,6 @@ replay_pid*
 
 # application properties
 *application.properties
+
+# excluir pasta target
+target
