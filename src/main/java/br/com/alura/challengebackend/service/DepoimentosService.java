@@ -35,4 +35,8 @@ public class DepoimentosService {
                 DepoimentoDTO::new
         ).toList();
     }
+
+    public void excluir(Long id) {
+        this.repository.deleteById(id);
+    }
 }

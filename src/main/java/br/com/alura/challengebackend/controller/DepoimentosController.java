@@ -39,6 +39,13 @@ public class DepoimentosController {
 
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id){
+        this.service.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity listar(
             @RequestParam(value = "depoente", required = false) String depoente,
