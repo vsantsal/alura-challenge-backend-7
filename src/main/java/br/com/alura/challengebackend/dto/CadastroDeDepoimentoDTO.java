@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CadastroDeDepoimentoDTO(
         @NotBlank(message = "campo 'depoente' obrigatório")
         String depoente,
+        @NotBlank(message = "campo 'depoimento' obrigatório")
         String depoimento,
         @JsonAlias(value = "url_foto")
         String urlFoto

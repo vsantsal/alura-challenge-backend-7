@@ -71,4 +71,19 @@ class DepoimentosControllerTest {
                 // Assert
                 .andExpect(status().isBadRequest());
     }
+
+    @DisplayName("Não deve permitir requisição sem informar depoimento")
+    @Test
+    public void testCenario3() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"Meu nome\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
 }
