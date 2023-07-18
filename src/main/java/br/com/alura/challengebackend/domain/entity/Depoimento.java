@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
+@Table(name = "cd_depoimentos")
 @Getter
 public class Depoimento {
     @Id
