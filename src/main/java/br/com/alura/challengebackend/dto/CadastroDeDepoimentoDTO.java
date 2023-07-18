@@ -13,6 +13,7 @@ public record CadastroDeDepoimentoDTO(
                 @Size(min = 1, max = 500)
         String depoimento,
         @JsonAlias(value = "url_foto")
+                @Size(min = 1, max = 255)
         String urlFoto
 ) {
     public Depoimento toModel() {

@@ -7,12 +7,14 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -170,12 +172,27 @@ class DepoimentosControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Disabled("mockando ainda argumento de findall")
+    @DisplayName("Não deve permitir requisição com url foto vazio, se passado nos dados")
+    @Test
+    public void testCenario8() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"" +"a".repeat(120) + "\"," +
+                                                "\"depoimento\": \""+ "b".repeat(500) +"\"," +
+                                                " \"url_foto\": \"\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
     @DisplayName("Listagem de depoimentos para repositório com apenas um")
     @Test
-    public void testCenarioSem() throws Exception {
+    public void testCenario9() throws Exception {
         // Arrange
-        when(repository.findAll(Example.of(new Depoimento()))).thenReturn(
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
                 List.of(
                         new Depoimento(
                                 "Meu nome",
@@ -190,6 +207,67 @@ class DepoimentosControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
                         Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].depoente",
+                        Matchers.is("Meu nome")))
+                .andExpect(jsonPath("$[0].depoimento",
+                        Matchers.is("Meu Depoimento")))
+                .andExpect(jsonPath("$[0].url_foto",
+                        Matchers.is("Minha foto")))
+        ;
+    }
+
+    @DisplayName("Listagem de depoimentos para repositório com mais de um")
+    @Test
+    public void testCenario10() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of(
+                        new Depoimento(
+                                "Meu nome",
+                                "Meu Depoimento",
+                                "Minha foto"),
+                        new Depoimento(
+                                "Meu nome 2",
+                                "Meu Depoimento 2",
+                                "Minha foto 2")
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(get("/depoimentos"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(2)))
+                .andExpect(jsonPath("$[0].depoente",
+                        Matchers.is("Meu nome")))
+                .andExpect(jsonPath("$[0].depoimento",
+                        Matchers.is("Meu Depoimento")))
+                .andExpect(jsonPath("$[0].url_foto",
+                        Matchers.is("Minha foto")))
+                .andExpect(jsonPath("$[1].depoente",
+                        Matchers.is("Meu nome 2")))
+                .andExpect(jsonPath("$[1].depoimento",
+                        Matchers.is("Meu Depoimento 2")))
+                .andExpect(jsonPath("$[1].url_foto",
+                        Matchers.is("Minha foto 2")))
+        ;
+    }
+
+    @DisplayName("Listagem de depoimentos para repositório vazio")
+    @Test
+    public void testCenario11() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of()
+        );
+
+        // Act
+        this.mockMvc.perform(get("/depoimentos"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(0)))
         ;
     }
 
