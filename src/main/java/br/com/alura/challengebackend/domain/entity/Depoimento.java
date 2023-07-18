@@ -16,7 +16,7 @@ public class Depoimento {
     @Column(nullable = false)
     private String depoimento;
 
-    @Column(name = "url_foto")
+    @Column(name = "url_foto", nullable = true)
     private String urlFoto;
 
     @Deprecated

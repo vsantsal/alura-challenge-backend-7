@@ -13,11 +13,10 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.containsString;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -86,4 +85,29 @@ class DepoimentosControllerTest {
                 // Assert
                 .andExpect(status().isBadRequest());
     }
+
+    @DisplayName("Deve cadastrar com sucesso se requisicao nao informa url foto")
+    @Test
+    public void testCenario4() throws Exception {
+        // Arrange
+        when(repository.save(any(Depoimento.class))).thenReturn(
+                new Depoimento(
+                        "Meu nome",
+                        "Meu depoimento",
+                        null
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(
+                        post( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"depoente\": \"Meu nome\", " +
+                                                "\"depoimento\": \"Meu depoimento\"}" )
+                )
+                // Assert
+                .andExpect(status().isCreated());
+    }
+
 }
