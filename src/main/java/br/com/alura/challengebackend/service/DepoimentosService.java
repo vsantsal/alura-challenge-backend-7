@@ -47,4 +47,8 @@ public class DepoimentosService {
         repository.save(depoimentoAAtualizar);
         return new DepoimentoDTO(depoimentoAAtualizar);
     }
+
+    public List<DepoimentoDTO> listarTresDepoimentosAleatorios() {
+        return List.of();
+    }
 }
