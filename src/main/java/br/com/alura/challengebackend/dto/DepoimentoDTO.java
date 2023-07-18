@@ -2,7 +2,9 @@ package br.com.alura.challengebackend.dto;
 
 import br.com.alura.challengebackend.domain.entity.Depoimento;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"id", "depoente", "depoimento", "url_foto"})
 public record DepoimentoDTO(
         Long id,
         String depoente,
