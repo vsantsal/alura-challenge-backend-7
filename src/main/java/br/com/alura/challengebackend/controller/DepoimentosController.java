@@ -46,6 +46,16 @@ public class DepoimentosController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(
+            @RequestBody @Valid DepoimentoDTO dto
+    ){
+        DepoimentoDTO dtoResposta = service.atualizar(dto);
+        return ResponseEntity.ok(dtoResposta);
+
+    }
+
     @GetMapping
     public ResponseEntity listar(
             @RequestParam(value = "depoente", required = false) String depoente,

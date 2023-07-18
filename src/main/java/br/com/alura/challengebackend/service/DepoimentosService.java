@@ -39,4 +39,12 @@ public class DepoimentosService {
     public void excluir(Long id) {
         this.repository.deleteById(id);
     }
+
+    public DepoimentoDTO atualizar(DepoimentoDTO dto) {
+        Depoimento depoimentoAAtualizar = repository.getReferenceById(dto.id());
+        depoimentoAAtualizar.setDepoimento(dto.depoimento());
+        depoimentoAAtualizar.setUrlFoto(dto.urlFoto());
+        repository.save(depoimentoAAtualizar);
+        return new DepoimentoDTO(depoimentoAAtualizar);
+    }
 }

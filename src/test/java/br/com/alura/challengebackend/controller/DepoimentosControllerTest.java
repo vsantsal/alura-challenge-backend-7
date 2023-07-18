@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 class DepoimentosControllerTest {
@@ -317,6 +319,95 @@ class DepoimentosControllerTest {
 
                 // Assert
                 .andExpect(status().isNoContent());
+    }
+
+    @DisplayName("Deve atualizar com sucesso depoimento e url de foto")
+    @Test
+    public void testCenario15() throws Exception {
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Depoimento(
+                        "Meu nome",
+                        "Meu depoimento",
+                        "https://www.minhaimagem.com"
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(
+                        put( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"id\": 1, " +
+                                        "\"depoente\": \"Meu nome\", " +
+                                                "\"depoimento\": \"Meu depoimento 2\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.depoente",
+                        Matchers.is("Meu nome")))
+                .andExpect(jsonPath("$.depoimento",
+                        Matchers.is("Meu depoimento 2")))
+                .andExpect(jsonPath("$.url_foto",
+                        Matchers.is("https://www.minhaimagem2.com")))
+        ;
+    }
+
+    @DisplayName("Deve não deve atualizar nome de depoente")
+    @Test
+    public void testCenario16() throws Exception {
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Depoimento(
+                        "Meu nome",
+                        "Meu depoimento",
+                        "https://www.minhaimagem.com"
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(
+                        put( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"id\": 1, " +
+                                                "\"depoente\": \"Meu nome 2\", " +
+                                                "\"depoimento\": \"Meu depoimento 2\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.depoente",
+                        Matchers.is("Meu nome")))
+                .andExpect(jsonPath("$.depoimento",
+                        Matchers.is("Meu depoimento 2")))
+                .andExpect(jsonPath("$.url_foto",
+                        Matchers.is("https://www.minhaimagem2.com")))
+        ;
+    }
+
+    @DisplayName("Deve atualização de dados para id inexistente")
+    @Test
+    public void testCenario17() throws Exception {
+        // Arrange
+        when(repository.getReferenceById(1L)).thenThrow(
+                EntityNotFoundException.class
+        );
+
+        // Act
+        this.mockMvc.perform(
+                        put( "/depoimentos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"id\": 1, " +
+                                                "\"depoente\": \"Meu nome 2\", " +
+                                                "\"depoimento\": \"Meu depoimento 2\"," +
+                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isNotFound())
+        ;
     }
 
 }

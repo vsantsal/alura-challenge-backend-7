@@ -2,6 +2,7 @@ package br.com.alura.challengebackend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cd_depoimentos")
@@ -15,9 +16,11 @@ public class Depoimento {
     private String depoente;
 
     @Column(nullable = false)
+    @Setter
     private String depoimento;
 
     @Column(name = "url_foto", nullable = true)
+    @Setter
     private String urlFoto;
 
     @Deprecated
