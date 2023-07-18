@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/depoimentos")
 public class DepoimentosController {
@@ -35,6 +37,16 @@ public class DepoimentosController {
         DepoimentoDTO dados = service.detalhar(id);
         return ResponseEntity.ok(dados);
 
+    }
+
+    @GetMapping
+    public ResponseEntity listar(
+            @RequestParam(value = "depoente", required = false) String depoente,
+            @RequestParam(value = "depoimento", required = false) String depoimento
+    ){
+        DepoimentoDTO paramPesquisa = new DepoimentoDTO(null, depoente, depoimento, null);
+        List<DepoimentoDTO> depoimentosEncontrados = service.listar(paramPesquisa);
+        return ResponseEntity.ok(depoimentosEncontrados);
     }
 
 }

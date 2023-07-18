@@ -13,4 +13,8 @@ public record DepoimentoDTO(
         this(depoimentoSalvo.getId(), depoimentoSalvo.getDepoente(),
                 depoimentoSalvo.getDepoimento(), depoimentoSalvo.getUrlFoto());
     }
+
+    public Depoimento toModel() {
+        return new Depoimento(depoente(), depoimento(), urlFoto());
+    }
 }

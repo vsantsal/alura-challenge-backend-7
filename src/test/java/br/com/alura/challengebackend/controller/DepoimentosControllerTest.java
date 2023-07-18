@@ -3,6 +3,8 @@ package br.com.alura.challengebackend.controller;
 import br.com.alura.challengebackend.domain.entity.Depoimento;
 import br.com.alura.challengebackend.domain.repository.DepoimentosRepository;
 import br.com.alura.challengebackend.service.DepoimentosService;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +12,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -115,6 +120,29 @@ class DepoimentosControllerTest {
                 .andExpect(header().exists("Location"))
                 .andExpect(header().string("Location", containsString("depoimentos/")));
 
+    }
+
+    @Disabled("mockando ainda argumento de findall")
+    @DisplayName("Listagem de depoimentos para repositório com apenas um")
+    @Test
+    public void testCenario5() throws Exception {
+        // Arrange
+        when(repository.findAll(Example.of(new Depoimento()))).thenReturn(
+                List.of(
+                        new Depoimento(
+                                "Meu nome",
+                                "Meu Depoimento",
+                                "Minha foto")
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(get("/depoimentos"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(1)))
+        ;
     }
 
 }
