@@ -47,4 +47,11 @@ public class DepoimentosService {
         repository.save(depoimentoAAtualizar);
         return new DepoimentoDTO(depoimentoAAtualizar);
     }
+
+    public List<DepoimentoDTO> listarTresDepoimentosAleatorios() {
+        List<Depoimento> depoimentos = repository.encontrarTresDepoimentosAleatoriamente();
+        return depoimentos.stream().map(
+                DepoimentoDTO::new
+        ).toList();
+    }
 }

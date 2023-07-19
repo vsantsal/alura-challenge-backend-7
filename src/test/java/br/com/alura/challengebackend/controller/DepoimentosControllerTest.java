@@ -387,7 +387,7 @@ class DepoimentosControllerTest {
         ;
     }
 
-    @DisplayName("Deve atualização de dados para id inexistente")
+    @DisplayName("Não pode atualizar dados para id inexistente")
     @Test
     public void testCenario17() throws Exception {
         // Arrange
