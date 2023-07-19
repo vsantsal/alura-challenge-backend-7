@@ -9,7 +9,7 @@ import java.util.List;
 public interface DepoimentosRepository extends JpaRepository<Depoimento, Long> {
     @Query("""
            SELECT d FROM Depoimento d
-           ORDER BY rand()
+           ORDER BY random()
            LIMIT 3
            """
     )
