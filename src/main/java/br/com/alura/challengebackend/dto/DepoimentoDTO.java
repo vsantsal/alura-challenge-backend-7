@@ -13,11 +13,11 @@ public record DepoimentoDTO(
                 @Size(min = 1, max = 120)
         String depoente,
         @NotBlank
-                @Size(min = 1, max = 255)
+                @Size(min = 1, max = 500)
         String depoimento,
 
         @JsonProperty("url_foto")
-                @Size(min = 1, max = 500)
+                @Size(min = 1, max = 255)
         String urlFoto
 ) {
     public DepoimentoDTO(Depoimento depoimentoSalvo) {
