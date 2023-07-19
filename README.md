@@ -8,6 +8,8 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
   * [Primeira Semana](#primeira-semana-)
     * [Primeiro passo](#primeiro-passo)
     * [Segundo passo](#segundo-passo)
+    * [Terceiro passo](#terceiro-passo)
+    * [Quarto passo](#quarto-passo)
 <!-- TOC -->
 
 # Descrição
@@ -45,3 +47,7 @@ Para cumprir a regra de negócio, utilizamos `JPQL` na interface `DepoimentosRep
 ### Terceiro passo
 
 Para liberar o Cors, utilizamos como solução criar uma subclasse de `OncePerRequestFilter` do Spring Framework.
+
+### Quarto passo
+
+Testes de *status code* já foram realizados durante o desenvolvimento no primeiro passo. Como desafio, adicionamos aqui dependência `jacoco` para mensurar cobertura de código pelos testes e também configuração do Github para exibir a badge no README.md.
