@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface DepoimentosRepository extends JpaRepository<Depoimento, Long> {
     @Query("""
-           SELECT d from Depoimento d
-           order by rand()
-           limit 3
+           SELECT d FROM Depoimento d
+           ORDER BY rand()
+           LIMIT 3
            """
     )
     List<Depoimento> encontrarTresDepoimentosAleatoriamente();
