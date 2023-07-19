@@ -49,6 +49,9 @@ public class DepoimentosService {
     }
 
     public List<DepoimentoDTO> listarTresDepoimentosAleatorios() {
-        return List.of();
+        List<Depoimento> depoimentos = repository.encontrarTresDepoimentosAleatoriamente();
+        return depoimentos.stream().map(
+                DepoimentoDTO::new
+        ).toList();
     }
 }
