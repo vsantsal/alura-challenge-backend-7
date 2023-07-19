@@ -7,6 +7,7 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
 * [Semanas](#semanas)
   * [Primeira Semana](#primeira-semana-)
     * [Primeiro passo](#primeiro-passo)
+    * [Segundo passo](#segundo-passo)
 <!-- TOC -->
 
 # Descrição
@@ -38,3 +39,5 @@ Configuramos o `Actions` para execução dos testes conforme integrações ao ra
 Na sequência, desenvolveremos o *endpoint* `depoimentos-home`, que deverá retornar "depoimentos de 3 pessoas de forma randômica".
 
 Previamente, acrescentaremos ao projeto dependências para geração de documentação automática por *swagger*, a qual pode ser conferida nos *endpoints* habituais `/v3/api-docs` e `/swagger-ui.html`.
+
+Para cumprir a regra de negócio, utilizamos `JPQL` na interface `DepoimentosRepository` - e testamos através de classe de teste anotada por `@DataJpaTest`.
