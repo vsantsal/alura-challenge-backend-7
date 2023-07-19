@@ -17,6 +17,7 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
 ![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
 ![server_ci](https://img.shields.io/badge/Github%20Actions-282a2e?style=for-the-badge&logo=githubactions&logoColor=367cfe)
 ![example workflow](https://github.com/vsantsal/alura-challenge-backend-7/actions/workflows/maven.yml/badge.svg)
+![Coverage](.github/badges/jacoco.svg)
 
 Desafio é a construção de API para "disponibilizar informações e recursos do banco de dados relacionados a possíveis destinos de viagem, exibindo fotos, textos e também recursos sobre depoimentos de outras pessoas viajantes", conforme exposto na [página do desafio](https://www.alura.com.br/challenges/back-end-7).
 
