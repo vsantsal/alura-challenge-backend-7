@@ -34,6 +34,101 @@ Utilizaremos o *framework* Spring Boot, com Postgres como SGBD.
 
 ## `/depoimentos`
 
+O *endpoint* permite cadastrar depoimentos de verbo **POST**, passando na requisição um *JSON* como ilustrado abaixo:
+
+`POST /depoimentos`
+
+*Requisição*
+```json
+{
+  "depoente": "Marco Polo",
+  "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+  "url_foto": "https://www.minhaimageminsatisfeita.com"
+}
+```
+
+No cadastro, os campos `depoente` e `depoimento` são obrigatórios, ao passo que pode ou não se informar `url_foto`.
+
+Também é possível buscar depoimentos por (opcionalmente) `depoente` e `depoimento`, assim como remover. Também apresentamos exemplos das chamadas na sequência.
+
+`GET /depoimento?depoente=juninho`
+
+*Resposta*
+```json
+[
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  },
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  }  
+]
+```
+
+`GET /depoimento?depoente`
+
+*Resposta*
+```json
+[
+  { "id": 1,
+    "depoente": "Marco Polo",
+    "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+    "url_foto": "https://www.minhaimageminsatisfeita.com"
+  },  
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  },
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  }  
+]
+```
+
+`DELETE /depoimento/1`
+
+*Resposta*
+
+```json
+```
+
+Por fim, é possível atualizar `url_foto` e `depoimento` (o campo `depoente` porém não aceita alterações).
+
+`PUT /depoimentos`
+
+*Requisição*
+```json
+{
+  "id": 1,
+  "depoente": "Marco Polo 2",
+  "depoimento": "Mudei de ideia. Voltaria amanhã.",
+  "url_foto": "https://www.minhaimagemsatisfeita.com"
+}
+```
+
+*Resposta*
+```json
+{
+  "id": 1,
+  "depoente": "Marco Polo",
+  "depoimento": "Mudei de ideia. Voltaria amanhã.",
+  "url_foto": "https://www.minhaimagemsatisfeita.com"
+}
+```
+
+Erros de requisição são tratados pela aplicação.
+
 # 🗓️ Semanas
 
 ## Primeira Semana 
