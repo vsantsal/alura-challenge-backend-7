@@ -3,8 +3,11 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
 
 <!-- TOC -->
 * [Challenge Back-End 7 Alura: API REST com Spring Boot](#challenge-back-end-7-alura-api-rest-com-spring-boot)
-* [Descrição](#descrição)
-* [Semanas](#semanas)
+* [👓 Descrição](#-descrição)
+* [📖 API](#-api)
+  * [`/depoimentos`](#depoimentos)
+  * [`/depoimentos-home`](#depoimentos-home)
+* [🗓️ Semanas](#-semanas)
   * [Primeira Semana](#primeira-semana-)
     * [Primeiro passo](#primeiro-passo)
     * [Segundo passo](#segundo-passo)
@@ -12,18 +15,151 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
     * [Quarto passo](#quarto-passo)
 <!-- TOC -->
 
-# Descrição
+# 👓 Descrição
+
+![status_desenvolvimento](https://img.shields.io/static/v1?label=Status&message=Em%20Desenvolvimento&color=yellow&style=for-the-badge)
+![Badge Java](https://img.shields.io/static/v1?label=Java&message=17&color=orange&style=for-the-badge&logo=java)
 
 ![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
 ![server_ci](https://img.shields.io/badge/Github%20Actions-282a2e?style=for-the-badge&logo=githubactions&logoColor=367cfe)
+
 ![example workflow](https://github.com/vsantsal/alura-challenge-backend-7/actions/workflows/maven.yml/badge.svg)
 ![Coverage](.github/badges/jacoco.svg)
 
-Desafio é a construção de API para "disponibilizar informações e recursos do banco de dados relacionados a possíveis destinos de viagem, exibindo fotos, textos e também recursos sobre depoimentos de outras pessoas viajantes", conforme exposto na [página do desafio](https://www.alura.com.br/challenges/back-end-7).
+O desafio é a construção de API para "disponibilizar informações e recursos do banco de dados relacionados a possíveis destinos de viagem, exibindo fotos, textos e também recursos sobre depoimentos de outras pessoas viajantes", conforme exposto na [página do desafio](https://www.alura.com.br/challenges/back-end-7).
 
 Utilizaremos o *framework* Spring Boot, com Postgres como SGBD.
 
-# Semanas
+# 📖 API
+
+## `/depoimentos`
+
+O *endpoint* permite cadastrar depoimentos de verbo **POST**, passando na requisição um *JSON* como ilustrado abaixo:
+
+`POST /depoimentos`
+
+*Requisição*
+```json
+{
+  "depoente": "Marco Polo",
+  "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+  "url_foto": "https://www.minhaimageminsatisfeita.com"
+}
+```
+
+No cadastro, os campos `depoente` e `depoimento` são obrigatórios, ao passo que pode ou não se informar `url_foto`.
+
+Também é possível buscar depoimentos por (opcionalmente) `depoente` e `depoimento`, assim como remover. Também apresentamos exemplos das chamadas na sequência.
+
+`GET /depoimentos?depoente=juninho`
+
+*Resposta*
+```json
+[
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  },
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  }  
+]
+```
+
+`GET /depoimentos`
+
+*Resposta*
+```json
+[
+  { "id": 1,
+    "depoente": "Marco Polo",
+    "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+    "url_foto": "https://www.minhaimageminsatisfeita.com"
+  },  
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  },
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  }  
+]
+```
+
+`DELETE /depoimentos/1`
+
+*Resposta*
+
+```json
+```
+
+Por fim, é possível atualizar `url_foto` e `depoimento` (o campo `depoente` porém não aceita alterações).
+
+`PUT /depoimentos`
+
+*Requisição*
+```json
+{
+  "id": 1,
+  "depoente": "Marco Polo 2",
+  "depoimento": "Mudei de ideia. Voltaria amanhã.",
+  "url_foto": "https://www.minhaimagemsatisfeita.com"
+}
+```
+
+*Resposta*
+```json
+{
+  "id": 1,
+  "depoente": "Marco Polo",
+  "depoimento": "Mudei de ideia. Voltaria amanhã.",
+  "url_foto": "https://www.minhaimagemsatisfeita.com"
+}
+```
+
+Erros de requisição são tratados pela aplicação.
+
+## `/depoimentos-home`
+
+Como *endpoint* adicional, a API possibilita, ao se chamar o recurso, consultar 3 depoimentos aleatoriamente.
+
+`GET /depoimentos-home`
+
+*Resposta*
+```json
+[
+  { "id": 1,
+    "depoente": "Marco Polo",
+    "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+    "url_foto": "https://www.minhaimageminsatisfeita.com"
+  },
+  ,
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  },
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  }
+]
+```
+
+# 🗓️ Semanas
 
 ## Primeira Semana 
 
