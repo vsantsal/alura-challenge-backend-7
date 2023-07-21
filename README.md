@@ -3,11 +3,11 @@ Challenge Back-End 7 Alura: API REST com Spring Boot
 
 <!-- TOC -->
 * [Challenge Back-End 7 Alura: API REST com Spring Boot](#challenge-back-end-7-alura-api-rest-com-spring-boot)
-* [Descrição](#descrição)
-* [API](#api)
-  * [`depoimentos`](#depoimentos)
-  * [`depoimentos-home`](#depoimentos)
-* [Semanas](#semanas)
+* [👓 Descrição](#-descrição)
+* [📖 API](#-api)
+  * [`/depoimentos`](#depoimentos)
+  * [`/depoimentos-home`](#depoimentos-home)
+* [🗓️ Semanas](#-semanas)
   * [Primeira Semana](#primeira-semana-)
     * [Primeiro passo](#primeiro-passo)
     * [Segundo passo](#segundo-passo)
@@ -51,7 +51,7 @@ No cadastro, os campos `depoente` e `depoimento` são obrigatórios, ao passo qu
 
 Também é possível buscar depoimentos por (opcionalmente) `depoente` e `depoimento`, assim como remover. Também apresentamos exemplos das chamadas na sequência.
 
-`GET /depoimento?depoente=juninho`
+`GET /depoimentos?depoente=juninho`
 
 *Resposta*
 ```json
@@ -71,7 +71,7 @@ Também é possível buscar depoimentos por (opcionalmente) `depoente` e `depoim
 ]
 ```
 
-`GET /depoimento?depoente`
+`GET /depoimentos`
 
 *Resposta*
 ```json
@@ -96,7 +96,7 @@ Também é possível buscar depoimentos por (opcionalmente) `depoente` e `depoim
 ]
 ```
 
-`DELETE /depoimento/1`
+`DELETE /depoimentos/1`
 
 *Resposta*
 
@@ -128,6 +128,36 @@ Por fim, é possível atualizar `url_foto` e `depoimento` (o campo `depoente` po
 ```
 
 Erros de requisição são tratados pela aplicação.
+
+## `/depoimentos-home`
+
+Como *endpoint* adicional, a API possibilita, ao se chamar o recurso, consultar 3 depoimentos aleatoriamente.
+
+`GET /depoimentos-home`
+
+*Resposta*
+```json
+[
+  { "id": 1,
+    "depoente": "Marco Polo",
+    "depoimento": "Fui e não gostei. Jamais voltaria. Arrependido.",
+    "url_foto": "https://www.minhaimageminsatisfeita.com"
+  },
+  ,
+  {
+    "id": 101,
+    "depoente": "juninho",
+    "depoimento": "Não gostei!",
+    "url_foto": "https://www.imagemparamostrarquaoruimfoi.com"
+  },
+  {
+    "id": 42,
+    "depoente": "juninho",
+    "depoimento": "Muito bacana!",
+    "url_foto": null
+  }
+]
+```
 
 # 🗓️ Semanas
 
