@@ -1,8 +1,8 @@
 package br.com.alura.challengebackend.dto;
 
 import br.com.alura.challengebackend.domain.entity.Destino;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -11,8 +11,13 @@ public record CadastroDeDestinoDTO(
                 @Size(max = 120)
         String nome,
 
+        @NotNull
+                @Positive
+                @Digits(integer = 15, fraction = 2)
         BigDecimal preco,
 
+        @JsonProperty("url_foto")
+        @Size(min = 1, max = 255)
         String urlFoto
 ) {
     public Destino toModel() {
