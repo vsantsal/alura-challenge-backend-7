@@ -66,4 +66,51 @@ class DestinosControllerTest {
                 .andExpect(header().string("Location", containsString(ENDPOINT)));
     }
 
+    @DisplayName("Não deve permitir requisição sem informar nome de destino")
+    @Test
+    public void testCenario2() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"preco\": 1234.56," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("Não deve permitir requisição com nome de destino com mais de 120 caracteres")
+    @Test
+    public void testCenario3() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"nome\": \"" +"a".repeat(121) + "\"," +
+                                                "\"preco\": 1234.56," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("Não deve permitir requisição com nome de destino vazio")
+    @Test
+    public void testCenario4() throws Exception {
+        // Act
+        this.mockMvc.perform(
+                        post( ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"nome\": \"\"," +
+                                                "\"preco\": 1234.56," +
+                                                " \"url_foto\": \"https://www.minhaimagem.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
 }
