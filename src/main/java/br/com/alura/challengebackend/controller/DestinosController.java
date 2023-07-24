@@ -39,4 +39,13 @@ public class DestinosController {
         return ResponseEntity.ok(depoimentosEncontrados);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(
+            @PathVariable Long id
+    ){
+        DestinoDTO dados = service.detalhar(id);
+        return ResponseEntity.ok(dados);
+
+    }
+
 }

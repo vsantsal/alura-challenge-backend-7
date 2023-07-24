@@ -1,10 +1,9 @@
 package br.com.alura.challengebackend.service;
 
-import br.com.alura.challengebackend.domain.entity.Depoimento;
+
 import br.com.alura.challengebackend.domain.entity.Destino;
 import br.com.alura.challengebackend.domain.repository.DestinosRepository;
 import br.com.alura.challengebackend.dto.CadastroDeDestinoDTO;
-import br.com.alura.challengebackend.dto.DepoimentoDTO;
 import br.com.alura.challengebackend.dto.DestinoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -32,5 +31,10 @@ public class DestinosService {
         return  destinos.stream().map(
                 DestinoDTO::new
         ).toList();
+    }
+
+    public DestinoDTO detalhar(Long id) {
+        var destino = repository.getReferenceById(id);
+        return new DestinoDTO(destino);
     }
 }
