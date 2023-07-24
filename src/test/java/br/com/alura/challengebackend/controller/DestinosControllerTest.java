@@ -443,4 +443,19 @@ class DestinosControllerTest {
         ;
     }
 
+    @DisplayName("Busca por destino inválido retorna status not found")
+    @Test
+    public void testCenario20() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenThrow(
+                EntityNotFoundException.class
+        );
+
+        // Act
+        this.mockMvc.perform(get(ENDPOINT))
+                // Assert
+                .andExpect(status().isNotFound())
+        ;
+    }
+
 }
