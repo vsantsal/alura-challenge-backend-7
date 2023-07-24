@@ -1,8 +1,7 @@
-Challenge Back-End 7 Alura: API REST com Spring Boot
+Jornada Milhas - Challenge Back-End 7 Alura: API REST com Spring Boot
 ==========================
 
 <!-- TOC -->
-* [Challenge Back-End 7 Alura: API REST com Spring Boot](#challenge-back-end-7-alura-api-rest-com-spring-boot)
 * [👓 Descrição](#-descrição)
 * [📖 API](#-api)
   * [`/depoimentos`](#depoimentos)
@@ -188,3 +187,11 @@ Para liberar o Cors, utilizamos como solução criar uma subclasse de `OncePerRe
 ### Quarto passo
 
 Testes de *status code* já foram realizados durante o desenvolvimento no primeiro passo. Como desafio, adicionamos aqui dependência `jacoco` para mensurar cobertura de código pelos testes e também configuração do Github para exibir a badge no README.md.
+
+## Segunda Semana
+
+Na segunda semana, o foco é a criação *endpoint* `/destinos`, baseado no recurso `Destino`, com os seguintes dados:
+
+* `Foto`
+* `Nome`
+* `Preco`
