@@ -20,14 +20,20 @@ public class TratadorErrosController {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity tratarErro404(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Depoimento não encontrado");
+    public ResponseEntity tratarErro404(EntityNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ErroSoComMensagemValidacao(exception.getMessage())
+        );
     }
 
     private record DadosErrosValidacao(String campo, String mensagem){
         public DadosErrosValidacao(FieldError erro) {
             this(erro.getField(), erro.getDefaultMessage());
         }
+
+    }
+
+    private record ErroSoComMensagemValidacao(String mensagem){
 
     }
 
