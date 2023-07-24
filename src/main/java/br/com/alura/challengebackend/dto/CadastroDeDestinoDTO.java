@@ -12,7 +12,7 @@ public record CadastroDeDestinoDTO(
         String nome,
 
         @NotNull
-                @Positive
+                @Positive(message = "preco informado deve ser positivo")
                 @Digits(integer = 15, fraction = 2)
         BigDecimal preco,
 

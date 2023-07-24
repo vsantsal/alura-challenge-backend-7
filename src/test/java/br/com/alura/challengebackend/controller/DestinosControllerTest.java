@@ -167,7 +167,12 @@ class DestinosControllerTest {
                                                 " \"url_foto\": \"https://www.imagemdestino.com\"}" )
                 )
                 // Assert
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].campo",
+                        Matchers.is("preco")))
+                .andExpect(jsonPath("$[0].mensagem",
+                        Matchers.is("preco informado deve ser positivo")))
+        ;
     }
 
     @DisplayName("Não deve permitir cadastro de destino com mais de duas casas decimais")
