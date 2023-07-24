@@ -1,6 +1,7 @@
 package br.com.alura.challengebackend.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
@@ -9,15 +10,19 @@ import java.math.BigDecimal;
 public class Destino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
+    @Getter
     private String nome;
 
     private Long precoEmCentavos;
 
+    @Getter
     @Transient
     private BigDecimal preco;
 
+    @Getter
     private String urlFoto;
 
     @Deprecated
