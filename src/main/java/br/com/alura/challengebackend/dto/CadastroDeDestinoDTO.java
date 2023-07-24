@@ -11,8 +11,8 @@ public record CadastroDeDestinoDTO(
                 @Size(max = 120)
         String nome,
 
-        @NotNull
-                @Positive(message = "preco informado deve ser positivo")
+        @NotNull(message = "campo obrigatório")
+                @Positive(message = "preço informado deve ser positivo")
                 @Digits(integer = 15, fraction = 2)
         BigDecimal preco,
 

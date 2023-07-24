@@ -135,7 +135,12 @@ class DestinosControllerTest {
                                                 " \"url_foto\": \"https://www.minhaimagem.com\"}" )
                 )
                 // Assert
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].campo",
+                        Matchers.is("preco")))
+                .andExpect(jsonPath("$[0].mensagem",
+                        Matchers.is("campo obrigatório")))
+        ;
     }
 
     @DisplayName("Não deve permitir cadastro de destino com preço negativo")
@@ -151,7 +156,12 @@ class DestinosControllerTest {
                                                 " \"url_foto\": \"https://www.imagemdestino.com\"}" )
                 )
                 // Assert
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].campo",
+                        Matchers.is("preco")))
+                .andExpect(jsonPath("$[0].mensagem",
+                        Matchers.is("preço informado deve ser positivo")))
+        ;
     }
 
     @DisplayName("Não deve permitir cadastro de destino com preço zero")
@@ -171,7 +181,7 @@ class DestinosControllerTest {
                 .andExpect(jsonPath("$[0].campo",
                         Matchers.is("preco")))
                 .andExpect(jsonPath("$[0].mensagem",
-                        Matchers.is("preco informado deve ser positivo")))
+                        Matchers.is("preço informado deve ser positivo")))
         ;
     }
 
@@ -448,18 +458,20 @@ class DestinosControllerTest {
         ;
     }
 
-    @DisplayName("Busca por destino inválido retorna status not found")
+    @DisplayName("Busca por destino inválido retorna status not found com mensagem apropriada")
     @Test
     public void testCenario20() throws Exception {
         // Arrange
-        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenThrow(
-                EntityNotFoundException.class
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of()
         );
 
         // Act
-        this.mockMvc.perform(get(ENDPOINT))
+        this.mockMvc.perform(get(ENDPOINT).param("nome", "nome"))
                 // Assert
                 .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensagem",
+                        Matchers.is("Nenhum destino foi encontrado")))
         ;
     }
 

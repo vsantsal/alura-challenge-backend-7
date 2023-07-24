@@ -3,6 +3,7 @@ package br.com.alura.challengebackend.controller;
 import br.com.alura.challengebackend.dto.CadastroDeDestinoDTO;
 import br.com.alura.challengebackend.dto.DestinoDTO;
 import br.com.alura.challengebackend.service.DestinosService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class DestinosController {
     ){
         DestinoDTO paramPesquisa = new DestinoDTO(null, nome, null, null);
         List<DestinoDTO> depoimentosEncontrados = service.listar(paramPesquisa);
+        if (nome != null && depoimentosEncontrados.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum destino foi encontrado");
+        }
         return ResponseEntity.ok(depoimentosEncontrados);
     }
 
