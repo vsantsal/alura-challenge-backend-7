@@ -1,10 +1,9 @@
 package br.com.alura.challengebackend.controller;
 
 
-import br.com.alura.challengebackend.domain.entity.Depoimento;
+
 import br.com.alura.challengebackend.domain.entity.Destino;
 import br.com.alura.challengebackend.domain.repository.DestinosRepository;
-import br.com.alura.challengebackend.dto.DestinoDTO;
 import br.com.alura.challengebackend.service.DestinosService;
 import jakarta.persistence.EntityNotFoundException;
 import org.hamcrest.Matchers;
@@ -376,6 +375,39 @@ class DestinosControllerTest {
 
                 // Assert
                 .andExpect(status().isNoContent());
+    }
+
+    @DisplayName("Deve atualizar com sucesso depoimento e url de foto")
+    @Test
+    public void testCenario18() throws Exception {
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Destino(
+                        "Meu destino",
+                        new BigDecimal("100.01"),
+                        "https://www.minhaimagem.com"
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(
+                        put( ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"id\": 1, " +
+                                                "\"nome\": \"Meu destino\", " +
+                                                "\"preco\": 100.02," +
+                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                )
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome",
+                        Matchers.is("Meu destino")))
+                .andExpect(jsonPath("$.preco",
+                        Matchers.is(100.02)))
+                .andExpect(jsonPath("$.url_foto",
+                        Matchers.is("https://www.minhaimagem2.com")))
+        ;
     }
 
 }

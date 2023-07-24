@@ -55,4 +55,14 @@ public class DestinosController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(
+            @RequestBody @Valid DestinoDTO dto
+    ){
+        DestinoDTO dtoResposta = service.atualizar(dto);
+        return ResponseEntity.ok(dtoResposta);
+
+    }
+
 }

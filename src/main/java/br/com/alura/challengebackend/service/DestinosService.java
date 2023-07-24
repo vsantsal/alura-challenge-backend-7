@@ -41,4 +41,12 @@ public class DestinosService {
     public void excluir(Long id) {
         this.repository.deleteById(id);
     }
+
+    public DestinoDTO atualizar(DestinoDTO dto) {
+        Destino destinoAAtualizar = repository.getReferenceById(dto.id());
+        destinoAAtualizar.setPreco(dto.preco());
+        destinoAAtualizar.setUrlFoto(dto.urlFoto());
+        repository.save(destinoAAtualizar);
+        return new DestinoDTO(destinoAAtualizar);
+    }
 }

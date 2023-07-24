@@ -2,6 +2,7 @@ package br.com.alura.challengebackend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -23,6 +24,7 @@ public class Destino {
     private BigDecimal preco;
 
     @Getter
+    @Setter
     private String urlFoto;
 
     @Deprecated
@@ -38,5 +40,13 @@ public class Destino {
                     .toBigInteger().longValue();
 
         }
+    }
+
+    public void setPreco(BigDecimal preco) {
+        if (preco == null || preco.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("preco deve ser positivo");
+        }
+        this.preco = preco;
+        this.precoEmCentavos = this.preco.multiply(new BigDecimal("100")).longValue();
     }
 }
