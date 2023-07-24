@@ -43,7 +43,9 @@ public class Destino {
     }
 
     public void setPreco(BigDecimal preco) {
-        if (preco == null || preco.compareTo(BigDecimal.ZERO) < 0) {
+        if (preco == null ||
+                preco.compareTo(BigDecimal.ZERO) < 0
+                || preco.scale()  > 2) {
             throw new IllegalArgumentException("preco deve ser positivo");
         }
         this.preco = preco;
