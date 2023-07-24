@@ -7,7 +7,10 @@ import br.com.alura.challengebackend.dto.CadastroDeDestinoDTO;
 import br.com.alura.challengebackend.dto.DepoimentoDTO;
 import br.com.alura.challengebackend.dto.DestinoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DestinosService {
@@ -20,5 +23,14 @@ public class DestinosService {
         var destinoSalvo = repository.save(destinoASalvar);
         return new DestinoDTO(destinoSalvo);
 
+    }
+
+    public List<DestinoDTO> listar(DestinoDTO paramPesquisa) {
+        Destino destino = paramPesquisa.toModel();
+        Example<Destino> exemplo = Example.of(destino);
+        List<Destino> destinos = repository.findAll(exemplo);
+        return  destinos.stream().map(
+                DestinoDTO::new
+        ).toList();
     }
 }

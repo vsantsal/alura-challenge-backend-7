@@ -32,8 +32,11 @@ public class Destino {
         this.nome = nome;
         this.preco = preco;
         this.urlFoto = urlFoto;
-        this.precoEmCentavos = this.preco.multiply(
-                new BigDecimal("100"))
-                .toBigInteger().longValue();
+        if (this.preco != null) {
+            this.precoEmCentavos = this.preco.multiply(
+                            new BigDecimal("100"))
+                    .toBigInteger().longValue();
+
+        }
     }
 }

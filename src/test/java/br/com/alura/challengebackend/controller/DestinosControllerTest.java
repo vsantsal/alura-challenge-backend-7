@@ -1,27 +1,37 @@
 package br.com.alura.challengebackend.controller;
 
+
 import br.com.alura.challengebackend.domain.entity.Destino;
 import br.com.alura.challengebackend.domain.repository.DestinosRepository;
+import br.com.alura.challengebackend.dto.DestinoDTO;
 import br.com.alura.challengebackend.service.DestinosService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -233,5 +243,34 @@ class DestinosControllerTest {
                 // Assert
                 .andExpect(status().isBadRequest());
     }
+
+    @DisplayName("Listagem de destinos para repositório com apenas um")
+    @Test
+    public void testCenario12() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of(
+                        new Destino(
+                                "Meu destino",
+                                new BigDecimal("1234.56"),
+                                "Minha foto")
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(get(ENDPOINT))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].nome",
+                        Matchers.is("Meu destino")))
+                .andExpect(jsonPath("$[0].preco",
+                        Matchers.is(1234.56)))
+                .andExpect(jsonPath("$[0].url_foto",
+                        Matchers.is("Minha foto")))
+        ;
+    }
+
 
 }
