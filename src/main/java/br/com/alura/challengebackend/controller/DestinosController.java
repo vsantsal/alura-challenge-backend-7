@@ -48,4 +48,11 @@ public class DestinosController {
 
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id){
+        this.service.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -37,4 +37,8 @@ public class DestinosService {
         var destino = repository.getReferenceById(id);
         return new DestinoDTO(destino);
     }
+
+    public void excluir(Long id) {
+        this.repository.deleteById(id);
+    }
 }
