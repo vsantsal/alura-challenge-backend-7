@@ -272,5 +272,59 @@ class DestinosControllerTest {
         ;
     }
 
+    @DisplayName("Listagem de destinos para repositório com mais")
+    @Test
+    public void testCenario13() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of(
+                        new Destino(
+                                "Meu destino",
+                                new BigDecimal("1234.56"),
+                                "Minha foto"),
+                        new Destino(
+                                "Meu destino 2",
+                                new BigDecimal("98765.43"),
+                                "Minha foto 2")
+                )
+        );
+
+        // Act
+        this.mockMvc.perform(get(ENDPOINT))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(2)))
+                .andExpect(jsonPath("$[0].nome",
+                        Matchers.is("Meu destino")))
+                .andExpect(jsonPath("$[0].preco",
+                        Matchers.is(1234.56)))
+                .andExpect(jsonPath("$[0].url_foto",
+                        Matchers.is("Minha foto")))
+                        .andExpect(jsonPath("$[1].nome",
+                                Matchers.is("Meu destino 2")))
+                        .andExpect(jsonPath("$[1].preco",
+                                Matchers.is(98765.43)))
+                        .andExpect(jsonPath("$[1].url_foto",
+                                Matchers.is("Minha foto 2")))
+        ;
+    }
+
+    @DisplayName("Listagem de destinos para repositório vazio")
+    @Test
+    public void testCenario14() throws Exception {
+        // Arrange
+        when(repository.findAll(ArgumentMatchers.isA(Example.class))).thenReturn(
+                List.of()
+        );
+
+        // Act
+        this.mockMvc.perform(get(ENDPOINT))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(0)))
+        ;
+    }
 
 }
