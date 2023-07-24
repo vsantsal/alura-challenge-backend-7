@@ -1,8 +1,8 @@
 package br.com.alura.challengebackend.controller;
 
-import br.com.alura.challengebackend.domain.entity.Depoimento;
-import br.com.alura.challengebackend.domain.repository.DepoimentosRepository;
-import br.com.alura.challengebackend.service.DepoimentosService;
+import br.com.alura.challengebackend.domain.entity.Destino;
+import br.com.alura.challengebackend.domain.repository.DestinosRepository;
+import br.com.alura.challengebackend.service.DestinosService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
