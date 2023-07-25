@@ -1,6 +1,9 @@
 package br.com.alura.challengebackend.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,16 +18,22 @@ public class Destino {
     private Long id;
 
     @Getter
+    @Column(nullable = false)
+    @Size(min = 1, max = 120, message = "campo 'nome' deve possuir de 1 a 120 caracteres")
     private String nome;
 
+    @Column(nullable = false)
     private Long precoEmCentavos;
 
     @Getter
     @Transient
+    @NotNull
+    @Positive
     private BigDecimal preco;
 
     @Getter
     @Setter
+    @Size(min = 1, max = 255)
     private String urlFoto;
 
     @Deprecated
