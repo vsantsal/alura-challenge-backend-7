@@ -1,6 +1,6 @@
 package br.com.alura.challengebackend.domain.repository;
 
-import br.com.alura.challengebackend.domain.entity.Depoimento;
+
 import br.com.alura.challengebackend.domain.entity.Destino;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;
@@ -14,7 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import javax.sql.DataSource;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,6 +102,42 @@ class DestinosRepositoryTest {
                                 "a".repeat(120),
                                 new BigDecimal("-0.01"), "Minha Imagem")))
                 .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("Não é possível salvar url de foto com mais de 255 caracteres")
+    @Test
+    public void testCenario7() {
+        // Arrange / Act / Assert
+        assertThatThrownBy(
+                () -> repository.save(
+                        new Destino(
+                                "a".repeat(120),
+                                BigDecimal.ONE, "c".repeat(256))))
+                .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("Não é possível salvar url de foto vazia")
+    @Test
+    public void testCenario8() {
+        // Arrange / Act / Assert
+        assertThatThrownBy(
+                () -> repository.save(
+                        new Destino(
+                                "a".repeat(120),
+                                BigDecimal.ONE, "")))
+                .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("É possível salvar destino sem informar foto")
+    @Test
+    public void testCenario9() {
+        // Arrange / Act
+        repository.save(
+         new Destino("a".repeat(120), BigDecimal.ONE, null));
+        List<Destino> destinoList = repository.findAll();
+
+        // Assert
+        assertThat(destinoList).hasSize(1);
     }
 
 }

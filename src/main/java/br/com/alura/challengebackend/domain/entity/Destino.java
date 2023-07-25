@@ -33,6 +33,7 @@ public class Destino {
 
     @Getter
     @Setter
+    @Size(min = 1, max = 255)
     private String urlFoto;
 
     @Deprecated
