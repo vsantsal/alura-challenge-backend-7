@@ -54,7 +54,7 @@ class DestinosRepositoryTest {
                 .isInstanceOf(ConstraintViolationException.class);
     }
 
-    @DisplayName("Não é possível salvar destino com mais de 120 caracteres")
+    @DisplayName("Não é possível salvar destino com nome com mais de 120 caracteres")
     @Test
     public void testCenario3() {
         // Arrange / Act / Assert
@@ -63,6 +63,42 @@ class DestinosRepositoryTest {
                         new Destino(
                                 "a".repeat(121),
                                 BigDecimal.ONE, "Minha Imagem")))
+                .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("Não é possível salvar destino sem preco")
+    @Test
+    public void testCenario4() {
+        // Arrange / Act / Assert
+        assertThatThrownBy(
+                () -> repository.save(
+                        new Destino(
+                                "a".repeat(120),
+                                null, "Minha Imagem")))
+                .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("Não é possível salvar destino com preço zero")
+    @Test
+    public void testCenario5() {
+        // Arrange / Act / Assert
+        assertThatThrownBy(
+                () -> repository.save(
+                        new Destino(
+                                "a".repeat(120),
+                                BigDecimal.ZERO, "Minha Imagem")))
+                .isInstanceOf(ConstraintViolationException.class);
+    }
+
+    @DisplayName("Não é possível salvar destino com preço negativo")
+    @Test
+    public void testCenario6() {
+        // Arrange / Act / Assert
+        assertThatThrownBy(
+                () -> repository.save(
+                        new Destino(
+                                "a".repeat(120),
+                                new BigDecimal("-0.01"), "Minha Imagem")))
                 .isInstanceOf(ConstraintViolationException.class);
     }
 
