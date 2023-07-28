@@ -406,13 +406,12 @@ class DestinosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        put( ENDPOINT)
+                        put( ENDPOINT + "/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
-                                        "{\"id\": 1, " +
-                                                "\"nome\": \"Meu destino\", " +
-                                                "\"preco\": 100.02," +
-                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                                    "{\"nome\": \"Meu destino\", " +
+                                    "\"preco\": 100.02," +
+                                    " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
                 )
                 // Assert
                 .andExpect(status().isOk())
@@ -439,13 +438,12 @@ class DestinosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        put( ENDPOINT)
+                        put( ENDPOINT + "/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
-                                        "{\"id\": 1, " +
-                                                "\"nome\": \"Meu destino 2\", " +
-                                                "\"preco\": 100.02," +
-                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                                        "{\"nome\": \"Meu destino 2\", " +
+                                        "\"preco\": 100.02," +
+                                        " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
                 )
                 // Assert
                 .andExpect(status().isOk())

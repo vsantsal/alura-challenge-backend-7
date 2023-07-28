@@ -42,8 +42,8 @@ public class DestinosService {
         this.repository.deleteById(id);
     }
 
-    public DestinoDTO atualizar(DestinoDTO dto) {
-        Destino destinoAAtualizar = repository.getReferenceById(dto.id());
+    public DestinoDTO atualizar(Long id, CadastroDeDestinoDTO dto) {
+        Destino destinoAAtualizar = repository.getReferenceById(id);
         destinoAAtualizar.setPreco(dto.preco());
         destinoAAtualizar.setUrlFoto(dto.urlFoto());
         repository.save(destinoAAtualizar);

@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class DepoimentosControllerTest {
+
+    private final String ENDPOINT = "/depoimentos";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,7 +57,7 @@ class DepoimentosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                post( "/depoimentos")
+                post( ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 "{\"depoente\": \"Meu nome\", " +
@@ -72,7 +75,7 @@ class DepoimentosControllerTest {
     public void testCenario2() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoimento\": \"Meu depoimento\"," +
@@ -87,7 +90,7 @@ class DepoimentosControllerTest {
     public void testCenario3() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"Meu nome\"," +
@@ -111,7 +114,7 @@ class DepoimentosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"Meu nome\", " +
@@ -129,7 +132,7 @@ class DepoimentosControllerTest {
     public void testCenario5() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"\"," +
@@ -145,7 +148,7 @@ class DepoimentosControllerTest {
     public void testCenario6() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"" +"a".repeat(121) + "\"," +
@@ -161,7 +164,7 @@ class DepoimentosControllerTest {
     public void testCenario7() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"" +"a".repeat(120) + "\"," +
@@ -177,7 +180,7 @@ class DepoimentosControllerTest {
     public void testCenario8() throws Exception {
         // Act
         this.mockMvc.perform(
-                        post( "/depoimentos")
+                        post( ENDPOINT)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"depoente\": \"" +"a".repeat(120) + "\"," +
@@ -202,7 +205,7 @@ class DepoimentosControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/depoimentos"))
+        this.mockMvc.perform(get(ENDPOINT))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -234,7 +237,7 @@ class DepoimentosControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/depoimentos"))
+        this.mockMvc.perform(get(ENDPOINT))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -263,7 +266,7 @@ class DepoimentosControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/depoimentos"))
+        this.mockMvc.perform(get(ENDPOINT))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -284,7 +287,7 @@ class DepoimentosControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/depoimentos/1"))
+        this.mockMvc.perform(get(ENDPOINT + "/1"))
             // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.depoente",
@@ -305,7 +308,7 @@ class DepoimentosControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/depoimentos/2"))
+        this.mockMvc.perform(get(ENDPOINT + "/2"))
 
                 // Assert
                 .andExpect(status().isNotFound());
@@ -315,7 +318,7 @@ class DepoimentosControllerTest {
     @Test
     public void testCenario14() throws Exception {
         // Act
-        this.mockMvc.perform(delete("/depoimentos/1"))
+        this.mockMvc.perform(delete(ENDPOINT + "/1"))
 
                 // Assert
                 .andExpect(status().isNoContent());
@@ -335,11 +338,10 @@ class DepoimentosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        put( "/depoimentos")
+                        put( ENDPOINT + "/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
-                                        "{\"id\": 1, " +
-                                        "\"depoente\": \"Meu nome\", " +
+                                        "{\"depoente\": \"Meu nome\", " +
                                                 "\"depoimento\": \"Meu depoimento 2\"," +
                                                 " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
                 )
@@ -368,13 +370,12 @@ class DepoimentosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        put( "/depoimentos")
+                        put( ENDPOINT + "/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
-                                        "{\"id\": 1, " +
-                                                "\"depoente\": \"Meu nome 2\", " +
-                                                "\"depoimento\": \"Meu depoimento 2\"," +
-                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                                    "{\"depoente\": \"Meu nome 2\", " +
+                                    "\"depoimento\": \"Meu depoimento 2\"," +
+                                    " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
                 )
                 // Assert
                 .andExpect(status().isOk())
@@ -397,13 +398,12 @@ class DepoimentosControllerTest {
 
         // Act
         this.mockMvc.perform(
-                        put( "/depoimentos")
+                        put( ENDPOINT + "/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
-                                        "{\"id\": 1, " +
-                                                "\"depoente\": \"Meu nome 2\", " +
-                                                "\"depoimento\": \"Meu depoimento 2\"," +
-                                                " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
+                                    "{\"depoente\": \"Meu nome 2\", " +
+                                    "\"depoimento\": \"Meu depoimento 2\"," +
+                                    " \"url_foto\": \"https://www.minhaimagem2.com\"}" )
                 )
                 // Assert
                 .andExpect(status().isNotFound())

@@ -59,12 +59,13 @@ public class DestinosController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity atualizar(
-            @RequestBody @Valid DestinoDTO dto
+            @PathVariable Long id,
+            @RequestBody @Valid CadastroDeDestinoDTO dto
     ){
-        DestinoDTO dtoResposta = service.atualizar(dto);
+        DestinoDTO dtoResposta = service.atualizar(id, dto);
         return ResponseEntity.ok(dtoResposta);
 
     }

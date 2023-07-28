@@ -46,12 +46,13 @@ public class DepoimentosController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity atualizar(
-            @RequestBody @Valid DepoimentoDTO dto
+            @PathVariable Long id,
+            @RequestBody @Valid CadastroDeDepoimentoDTO dto
     ){
-        DepoimentoDTO dtoResposta = service.atualizar(dto);
+        DepoimentoDTO dtoResposta = service.atualizar(id, dto);
         return ResponseEntity.ok(dtoResposta);
 
     }
