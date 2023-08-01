@@ -1,0 +1,1 @@
+CREATE DATABASE challenge_backend_alura;
