@@ -29,8 +29,5 @@ replay_pid*
 # mvn
 .mvn
 
-# application properties
-*application.properties
-
 # excluir pasta target
 target
