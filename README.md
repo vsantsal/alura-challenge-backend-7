@@ -14,6 +14,11 @@ Jornada Milhas - Challenge Back-End 7 Alura: API REST com Spring Boot
     * [Terceiro passo](#terceiro-passo)
     * [Quarto passo](#quarto-passo)
   * [Segunda Semana](#segunda-semana)
+  * [Terceira Semana](#terceira-semana)
+    * [Docker](#docker)
+      * [Criação de `Docker network`](#criação-de-docker-network)
+      * [Subir  Postgres](#subir--postgres-)
+      * [Subir Aplicação](#subir-aplicação)
 <!-- TOC -->
 
 # 👓 Descrição
@@ -23,6 +28,7 @@ Jornada Milhas - Challenge Back-End 7 Alura: API REST com Spring Boot
 
 ![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
 ![server_ci](https://img.shields.io/badge/Github%20Actions-282a2e?style=for-the-badge&logo=githubactions&logoColor=367cfe)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ![example workflow](https://github.com/vsantsal/alura-challenge-backend-7/actions/workflows/maven.yml/badge.svg)
 ![Coverage](.github/badges/jacoco.svg)
@@ -197,3 +203,49 @@ Na segunda semana, o foco é a criação *endpoint* `/destinos`, baseado no recu
 * `Foto`
 * `Nome`
 * `Preco`
+
+## Terceira Semana
+
+### Docker
+
+Previamente às atividades da semana, incluímos no projeto `Dockerfile` de modo a se rodar a aplicação em container `Docker`.
+
+Para utilizar a imagem no ambiente, basta executar o comando abaixo (no diretório onde o arquivo se localiza):
+
+```
+docker build -t minhatag:latest
+```
+
+Dado que a aplicação utiliza banco de dados Postgres, será necessário também executar outro contêiner a partir de imagem para ele - e realizar a comunicação entre os contêineres da aplicação e do banco de dados.
+
+```
+docker pull postgres
+```
+
+#### Criação de `Docker network`
+
+Para criar uma network a ser utilizada na comunicação entre os contêineres de aplicação e banco de dados, pode-se usar o comando abaixo:
+
+```
+docker network create redeminha
+```
+
+#### Subir  Postgres 
+
+Pode-se executar da primeira vez:
+
+```
+docker run -p 5432:5432 --name basedados --network redeminha -e POSTGRES_PASSWORD=password -d postgres
+```
+
+Posteriormente, usar `docker start CONTEINER_ID` e `docker stop CONTEINER_ID`.
+
+#### Subir Aplicação
+
+Para levantar o contêiner da aplicação, pode-se executar da primeira vez:
+
+```
+docker run -p 8080:8080 --name aplicacao-spring --network redeminha -e POSTGRES_URL=basedados -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=password -d minhatag:latest
+```
+
+Posteriormente, usar `docker start CONTEINER_ID` e `docker stop CONTEINER_ID`.
